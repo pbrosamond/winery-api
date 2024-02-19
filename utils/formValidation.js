@@ -6,7 +6,7 @@
  * If lack of property return {checkCode: 1, field: field}, property is empty return { checkCode: 2, field: field }, valid data return { checkCode: 0, field: 'Valid' }
  */
 
-const ValidatingFields = (requestBody, requiredField) => {
+const validatingFields = (requestBody, requiredField) => {
   // Validating the feilds
 
   for (var i in requiredField) {
@@ -21,3 +21,5 @@ const ValidatingFields = (requestBody, requiredField) => {
   }
   return { checkCode: 0, field: "Valid" };
 };
+
+export default validatingFields; 

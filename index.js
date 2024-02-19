@@ -1,7 +1,10 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+// import intakeRoutes from './routes/intake.js'
+import 'dotenv/config'
+import docketRoutes from './routes/docket.js'
+
 const app = express();
-require('dotenv').config();
-const cors = require('cors')
 app.use(cors())
 app.use(express.json());
 
@@ -15,12 +18,9 @@ app.get('/', (req, res) => {
   res.send('Welcome to cellarhand api');
 });
 
-const docketRoutes = require('./routes/docket-routes');
-const intakeRoutes = require('./routes/intake-routes');
-
 // all users routes
 app.use('/api/docket', docketRoutes);
-app.use('/api/intake', intakeRoutes);
+// app.use('/api/intake', intakeRoutes);
 
 app.listen(PORT, () => {
   console.log(`running at http://localhost:${PORT}`);
