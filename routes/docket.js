@@ -18,7 +18,7 @@ const router = express.Router();
 router
   .post("/", async (req, res) => {
     try {
-      const requiredfields = [
+      const requiredFields = [
         "vintage",
         "grower",
         "varietal",
@@ -51,7 +51,7 @@ router
       }
   
       // Generate docket_name
-      const docketName = `${vintage}${grower.substring(0, 2).toUpperCase()}${varietal.substring(0, 2).toUpperCase()}${vineyard.substring(0, 2).toUpperCase()}${block.toString().padStart(2, '0')}${row.toString().padStart(2, '0')}`;
+      const docketName = `${vintage}${String(grower).substring(0, 2).toUpperCase()}${String(varietal).substring(0, 2).toUpperCase()}${String(vineyard).substring(0, 2).toUpperCase()}${block.toString().padStart(2, '0')}${row.toString().padStart(2, '0')}`;
   
       // Insert new inventory item into the database
       const result = await database("dockets").insert({

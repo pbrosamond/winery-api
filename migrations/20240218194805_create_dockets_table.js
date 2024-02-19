@@ -6,6 +6,7 @@
 export const up = function (knex) {
     return knex.schema.createTable('dockets', (table) => {
       table.increments('id').primary();
+      table.string('docket_name').notNullable();
       table.integer('vintage').notNullable();
       table.string('varietal').notNullable();
       table.string('grower').notNullable();

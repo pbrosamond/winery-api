@@ -1,7 +1,7 @@
 [
     {    
         "id": "84e96018-4022-434e-80bf-000ce4cd12b8",
-        "docket": "Docket 1",
+        "docket_name": "Docket 1",
         "vintage": "2024",
         "grower": "Blue Grouse",
         "varietal": "Chardonnay",
@@ -11,7 +11,7 @@
     },
     {    
         "id": "84e96018-4022-434e-80bf-000ce4cd13ag",
-        "docket": "Docket 2",
+        "docket_name": "Docket 2",
         "vintage": "2024",
         "grower": "Blue Grouse",
         "varietal": "Furmint",
