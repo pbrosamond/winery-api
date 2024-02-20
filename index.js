@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 // import intakeRoutes from './routes/intake.js'
 import 'dotenv/config'
-import routes from './routes/routes.js'
+import dockets from './routes/dockets.js'
+import intakes from './routes/intakes.js'
 
 const app = express();
 app.use(cors())
@@ -19,7 +20,8 @@ app.get('/', (_req, res) => {
 });
 
 // all users routes
-app.use('/api', routes);
+app.use('/api/dockets', dockets);
+app.use('/api/intakes', intakes);
 
 app.listen(PORT, () => {
   console.log(`running at http://localhost:${PORT}`);
