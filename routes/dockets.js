@@ -79,7 +79,7 @@ router
   .get('/', async (_req, res) => {
     try {
       const data = await database("dockets")
-        .select("docket_id", "docket_name")
+        .select("*")
         // .first();
       res.status(200).json(data);
     } catch (error) {

@@ -21,6 +21,7 @@ app.get('/', (_req, res) => {
 
 // all users routes
 app.use('/api/dockets', dockets);
+app.use('/api/dockets/:id', intakes);
 app.use('/api/intakes', intakes);
 
 app.listen(PORT, () => {

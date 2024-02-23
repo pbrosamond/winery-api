@@ -52,13 +52,13 @@ router
         bins,
         total_weight,
         tare_weight,
-        fruit_weight: 0, // TODO make calculations for fruit-weight and predicted-volume
-        predicted_volume: 0 
+        fruit_weight: total_weight-tare_weight,
+        predicted_volume: (total_weight-tare_weight)*0.75
       });
 
       const newIntake = result[0];
       const createdIntake = await database("intakes as i")
-        .select("i.*", "d.docket_name")
+        .select("i.*", "d.docket_name") // TODO
         .join("dockets as d", "i.docket_id", "d.docket_id")
         .where({
           intake_id: newIntake,
@@ -67,13 +67,14 @@ router
 
       res.status(201).send(createdIntake);
     } catch (error) {
+      console.log("this is the error you are looking for", error)
       res.status(500).send(`Error creating docket: ${error}`);
     }
 })
   .get('/', async (_req, res) => {
     try {
       const data = await database("intakes as i")
-        .select("i.*", "d.docket_name")
+        .select("i.*", "d.*")
         .join("dockets as d", "i.docket_id", "d.docket_id")
       res.status(200).json(data);
     } catch (error) {
