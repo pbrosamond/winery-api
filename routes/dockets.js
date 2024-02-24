@@ -119,7 +119,7 @@ router
       res.status(500).send(`Error retrieving docket: ${error}`);
     }
   })
-  .delete('/', async(req, res) => {
+  .delete('/:docket_id', async(req, res) => {
     try {
       const docketId = req.params.docket_id;
   
@@ -129,7 +129,7 @@ router
   
       // Perform the delete operation in the database
       const deletedDocket = await database('Dockets as d')
-        .where('d.*')
+        .where('d.docket_id', docketId)
         .del();
   
       if (!deletedDocket) {

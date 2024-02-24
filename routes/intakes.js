@@ -82,7 +82,7 @@ router
       res.status(500).send(`Error retrieving docket: ${error}`);
     }
 })
-  .delete('/', async(req, res) => {
+  .delete('/:intake_id', async(req, res) => {
     try {
       const intakeId = req.params.intake_id;
   
@@ -92,7 +92,7 @@ router
   
       // Perform the delete operation in the database
       const deletedIntake = await database('intakes as i')
-        .where('i.*')
+        .where('i.intake_id', intakeId)
         .del();
   
       if (!deletedIntake) {
