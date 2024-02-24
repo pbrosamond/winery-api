@@ -81,6 +81,29 @@ router
       // Return Internal Server Error 500, if the error occurs at the backend
       res.status(500).send(`Error retrieving docket: ${error}`);
     }
-});
+})
+  .delete('/', async(req, res) => {
+    try {
+      const intakeId = req.params.intake_id;
+  
+      if (!intakeId) {
+        return res.status(400).send('Intake ID is required for deletion');
+      }
+  
+      // Perform the delete operation in the database
+      const deletedIntake = await database('intakes as i')
+        .where('i.*')
+        .del();
+  
+      if (!deletedIntake) {
+        return res.status(404).send('Intake not found');
+      }
+  
+      res.status(204).send(); // 204 No Content indicates successful deletion
+    } catch (error) {
+      console.error('Error deleting intake:', error);
+      res.status(500).send(`Error deleting intake: ${error}`);
+    }
+  });
 
 export default router;
