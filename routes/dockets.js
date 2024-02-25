@@ -141,6 +141,52 @@ router
       console.error('Error deleting docket:', error);
       res.status(500).send(`Error deleting docket: ${error}`);
     }
+  })
+  .patch('/:docket_id', async (req, res) => {
+    try {
+      const docketId = req.params.docket_id;
+
+      if (!docketId) {
+        return res.status(400).send('Docket ID is required for update');
+      }
+
+      const updatedFields = req.body;
+
+      // Validate if any valid field is provided in the request body
+      if (Object.keys(updatedFields).length === 0) {
+        return res.status(400).send('Please provide at least one field to update');
+      }
+
+      // Perform the update operation in the database
+      const updatedDocketCount = await database('dockets as d')
+        .where('d.docket_id', docketId)
+        .update(updatedFields);
+
+      if (!updatedDocketCount) {
+        return res.status(404).send('Docket not found');
+      }
+
+      // Retrieve the updated docket data
+      const updatedDocket = await database('dockets as d')
+        .select([
+          "docket_name",
+          "vintage",
+          "grower",
+          "varietal",
+          "vineyard",
+          "block",
+          "row",
+        ])
+        .where({
+          docket_id: docketId,
+        })
+        .first();
+
+      res.status(200).json(updatedDocket);
+    } catch (error) {
+      console.error('Error updating docket:', error);
+      res.status(500).send(`Error updating docket: ${error}`);
+    }
   });
 
 export default router;

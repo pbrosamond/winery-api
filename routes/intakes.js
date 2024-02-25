@@ -82,7 +82,7 @@ router
       res.status(500).send(`Error retrieving docket: ${error}`);
     }
 })
-  .delete('/:intake_id', async(req, res) => {
+  .delete('/:intake_id', async (req, res) => {
     try {
       const intakeId = req.params.intake_id;
   
@@ -103,6 +103,45 @@ router
     } catch (error) {
       console.error('Error deleting intake:', error);
       res.status(500).send(`Error deleting intake: ${error}`);
+    }
+  })
+  .patch('/:intake_id', async (req, res) => {
+    try {
+      const intakeId = req.params.intake_id;
+  
+      if (!intakeId) {
+        return res.status(400).send('Intake ID is required for update');
+      }
+  
+      const updatedFields = req.body;
+  
+      // Validate if any valid field is provided in the request body
+      if (Object.keys(updatedFields).length === 0) {
+        return res.status(400).send('Please provide at least one field to update');
+      }
+  
+      // Perform the update operation in the database
+      const updatedIntakeCount = await database('intakes as i')
+        .where('i.intake_id', intakeId)
+        .update(updatedFields);
+  
+      if (!updatedIntakeCount) {
+        return res.status(404).send('Intake not found');
+      }
+  
+      // Retrieve the updated intake data
+      const updatedIntake = await database('intakes as i')
+        .select('i.*', 'd.docket_name')
+        .join('dockets as d', 'i.docket_id', 'd.docket_id')
+        .where({
+          intake_id: intakeId,
+        })
+        .first();
+  
+      res.status(200).json(updatedIntake);
+    } catch (error) {
+      console.error('Error updating intake:', error);
+      res.status(500).send(`Error updating intake: ${error}`);
     }
   });
 
