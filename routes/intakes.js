@@ -132,7 +132,7 @@ router
       // Retrieve the updated intake data
       const updatedIntake = await database('intakes as i')
         .select('i.*', 'd.docket_name')
-        .join('dockets as d', 'i.docket_id', 'd.docket_id')
+        .join('dockets as d', 'i.docket_id', 'd.docket_id') // I think problem is in this section
         .where({
           intake_id: intakeId,
         })
