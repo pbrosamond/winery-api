@@ -67,7 +67,6 @@ router
 
       res.status(201).send(createdIntake);
     } catch (error) {
-      console.log("this is the error you are looking for", error)
       res.status(500).send(`Error creating docket: ${error}`);
     }
 })
