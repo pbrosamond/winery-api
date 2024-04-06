@@ -58,7 +58,7 @@ router
 
       const newIntake = result[0];
       const createdIntake = await database("intakes as i")
-        .select("i.*", "d.docket_name") // TODO
+        .select("i.*", "d.docket_name")
         .join("dockets as d", "i.docket_id", "d.docket_id")
         .where({
           intake_id: newIntake,
